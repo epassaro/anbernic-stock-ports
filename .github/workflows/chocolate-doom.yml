@@ -1,0 +1,13 @@
+name: chocolate-doom
+
+on:
+  push:
+    paths:
+      - chocolate-doom/**
+  workflow_dispatch:
+
+jobs:
+  doom:
+    uses: ./.github/workflows/build.yml
+    with:
+      game_dir: chocolate-doom

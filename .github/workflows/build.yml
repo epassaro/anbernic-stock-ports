@@ -1,0 +1,25 @@
+name: build
+
+on:
+  workflow_call:
+    inputs:
+      game_dir:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - run: |
+          docker run --rm \
+            -v "$PWD/${{ inputs.game_dir }}:/workdir" \
+            ghcr.io/epassaro/anbernic-stock-builder:master
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Continuous build
+          files: dist/*.zip
